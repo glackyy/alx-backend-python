@@ -64,6 +64,8 @@ class TestGithubOrgClient(unittest.TestCase):
                         "type": "Organization",
                         "site_admin": False
                     },
+                }
+                {
                     "id": 8566972,
                     "name": "kratu",
                     "private": False,
