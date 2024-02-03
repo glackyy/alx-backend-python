@@ -114,28 +114,29 @@ class TestGithubOrgClient(unittest.TestCase):
         cl_has_license = github_o_client.has_license(repo, key)
         self.assertEqual(cl_has_license, expected)
 
-    @parameterized_class([
-        {
-            'org_payload': TEST_PAYLOAD[0][0],
-            'repo_payload': TEST_PAYLOAD[0][1],
-            'expected_payload': TEST_PAYLOAD[0][2],
-            'apache2_payload': TEST_PAYLOAD[0][3],
-        },
-    ])
-    class TestIntegrationGithubOrgClient(unittest.TestCase):
-        """Performing integration test for the GithubOrgClient class"""
-        @classmethod
-        def setUpClass(cls) -> None:
-            """Setting up class fixtures before running tests"""
-            route_payload = {
-                'https://api.github.com/orgs/google': cls.org_payload,
-                'https://api.github.com/orgs/google/repos': cls.repos_payload,
-            }
 
-            def get_payload(url):
-                if url in route_payload:
-                    return Mock(**{'json.return_value': route_payload[url]})
-                return HTTPError
+@parameterized_class([
+    {
+        'org_payload': TEST_PAYLOAD[0][0],
+        'repo_payload': TEST_PAYLOAD[0][1],
+        'expected_payload': TEST_PAYLOAD[0][2],
+        'apache2_payload': TEST_PAYLOAD[0][3],
+    },
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Performing integration test for the GithubOrgClient class"""
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Setting up class fixtures before running tests"""
+        route_payload = {
+            'https://api.github.com/orgs/google': cls.org_payload,
+            'https://api.github.com/orgs/google/repos': cls.repos_payload,
+        }
 
-            cls.get_patcher = patch("requests.get", side_effect=get_payload)
-            cls.get_patcher.start()
+        def get_payload(url):
+            if url in route_payload:
+                return Mock(**{'json.return_value': route_payload[url]})
+            return HTTPError
+
+        cls.get_patcher = patch("requests.get", side_effect=get_payload)
+        cls.get_patcher.start()
