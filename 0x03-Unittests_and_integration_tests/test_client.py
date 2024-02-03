@@ -78,7 +78,7 @@ class TestGithubOrgClient(unittest.TestCase):
                     "has_issues": True,
                     "forks": 32,
                     "default_branch": "master",
-                }
+                },
             ]
         }
         mock_get_json.return_value = test_payload["repos"]
