@@ -104,5 +104,10 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @parameterized.expand([
         ({'license': {'key': "bsd-3-clause"}}, "bsd-3-clause", True),
-        ({'license': {'key': "bsl-1.0"}}, "bsd-3-clause", False),
+        ({'license': {'key': "bsl-1.0"}}, "bsl-1.0", False),
     ])
+    def test_has_license(self, repo: Dict, key: str, expected: bool) -> None:
+        """Testing the has_license method"""
+        github_o_client = GithubOrgClient("google")
+        cl_has_license = github_o_client.has_license(repo, key)
+        self.assertEqual(cl_has_license, expected)
