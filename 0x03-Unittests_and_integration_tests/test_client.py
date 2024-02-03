@@ -5,7 +5,8 @@ from parameterized import parameterized
 from unittest.mock import (
     patch,
     MagicMock,
-    Mock
+    Mock,
+    PropertyMock
 )
 from typing import Dict
 from client import (
@@ -28,5 +29,19 @@ class TestGithubOrgClient(unittest.TestCase):
         github_o_cl = GithubOrgClient(org)
         self.assertEqual(github_o_cl.org(), response)
         mocked.assert_called_once_with(
-            "http://api.github.com/orgs/{}".format(org)
+            "https://api.github.com/orgs/{}".format(org)
         )
+
+    def test_public_repos_url(self) -> None:
+        """Testing the public_repos_url property"""
+        with patch(
+                "client.GithubOrgClient.org",
+                new_callable=PropertyMock,
+                ) as mocked_org:
+            mocked_org.return_value = {
+                'repos_url': "https://api.github.com/users/google/repos",
+            }
+            self.assertEqual(
+                GithubOrgClient("google")._public_repos_url,
+                "https://"
+            )
