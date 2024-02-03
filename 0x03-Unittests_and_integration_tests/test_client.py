@@ -145,3 +145,16 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls) -> None:
         """Removing the class fixtures after running all tests"""
         cls.get_patcher.stop()
+
+    def test_public_repos(self) -> None:
+        """Testing the public_repos method"""
+        
+
+
+
+    def test_public_repos_with_license(self) -> None:
+        """Testing the public_repos method with a license"""
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(license="apache-2.0"),
+            self.apache2_repos,
+        )
