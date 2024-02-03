@@ -43,5 +43,5 @@ class TestGithubOrgClient(unittest.TestCase):
             }
             self.assertEqual(
                 GithubOrgClient("google")._public_repos_url,
-                "https://"
+                "https://api.github.com/users/google/repos",
             )
