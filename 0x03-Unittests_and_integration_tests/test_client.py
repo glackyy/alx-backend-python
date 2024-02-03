@@ -54,17 +54,20 @@ class TestGithubOrgClient(unittest.TestCase):
             'repos': [
                 {
                     "id": 7697149,
-                    "node_id": "MDEwOlJlcG9zaXRvcnk3Njk3MTQ5",
                     "name": "episodes.dart",
-                    "full_name": "google/episodes.dart",
                     "private": False,
                     "owner": {
                         "login": "google",
                         "id": 1342004,
-                        "type": "Organization",
-                        "site_admin": False
                     },
-                }
+                    "fork": False,
+                    "url": "https://api.github.com/repos/google/episodes.dart",
+                    "created_at": "2013-01-19T00:31:37Z",
+                    "updated_at": "2019-09-23T11:53:58Z",
+                    "has_issues": True,
+                    "forks": 22,
+                    "default_branch": "master",
+                },
                 {
                     "id": 8566972,
                     "name": "kratu",
