@@ -4,10 +4,11 @@ import unittest
 from parameterized import parameterized
 from typing import Dict, Tuple, Union
 from unittest.mock import patch, Mock
-from utils import(
+from utils import (
     access_nested_map,
     get_json
 )
+
 
 class TestAccessNestedMap(unittest.TestCase):
     """Testing the access_nested_map func"""
@@ -24,6 +25,7 @@ class TestAccessNestedMap(unittest.TestCase):
             ) -> None:
         """Testing access_nested_map output"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
+
     @parameterized.expand([
         ({}, ("a",), KeyError),
         ({"a": 1}, ("a", "b"), KeyError),
@@ -37,6 +39,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """Testing access_nested_map exception raising"""
         with self.assertRaises(exception):
             access_nested_map(nested_map, path)
+
 
 class TestGetJson(unittest.TestCase):
     """Testing the get_json func"""
