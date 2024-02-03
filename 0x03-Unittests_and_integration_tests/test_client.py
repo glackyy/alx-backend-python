@@ -8,6 +8,9 @@ from unittest.mock import (
     Mock
 )
 from typing import Dict
+from client import (
+    GithubOrgClient
+)
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -20,4 +23,10 @@ class TestGithubOrgClient(unittest.TestCase):
         "client.get_json",
     )
     def test_org(self, org: str, response: Dict, mocked: MagicMock) -> None:
-        
+        """Testing the org Method"""
+        mocked.return_value = MagicMock(return_value=response)
+        github_o_cl = GithubOrgClient(org)
+        self.assertEqual(github_o_cl.org(), response)
+        mocked.assert_called_once_with(
+            "http://api.github.com/orgs/{}".format(org)
+        )
