@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Testing the Client Module"""
 import unittest
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from unittest.mock import (
     patch,
     MagicMock,
@@ -12,6 +12,7 @@ from typing import Dict
 from client import (
     GithubOrgClient
 )
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -111,3 +112,21 @@ class TestGithubOrgClient(unittest.TestCase):
         github_o_client = GithubOrgClient("google")
         cl_has_license = github_o_client.has_license(repo, key)
         self.assertEqual(cl_has_license, expected)
+
+    @parameterized_class([
+        {
+            'org_payload': TEST_PAYLOAD[0][0],
+            'repo_payload': TEST_PAYLOAD[0][1],
+            'expected_payload': TEST_PAYLOAD[0][2],
+            'apache2_payload': TEST_PAYLOAD[0][3],
+        },
+    ])
+    class TestIntegrationGithubOrgClient(unittest.TestCase):
+        """Performing integration test for the GithubOrgClient class"""
+        @classmethod
+        def setUpClass(cls) -> None:
+            """Setting up class fixtures before running tests"""
+            route_payload = {
+                'https://api.github.com/orgs/google': cls.org_payload,
+                'https://api.github.com/orgs/google/repos': cls.repos_payload,
+            }
