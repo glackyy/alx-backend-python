@@ -140,3 +140,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
         cls.get_patcher = patch("requests.get", side_effect=get_payload)
         cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Removing the class fixtures after running all tests"""
+        cls.get_patcher.stop()
